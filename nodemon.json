@@ -1,0 +1,9 @@
+{
+  "watch": ["app", ".env"],
+  "ext": "js,ts,json,twig,html",
+  "ignore": [
+    "app/logs/*",
+    "app/**/*.{spec, test}.ts"
+  ],
+  "exec": "ts-node --transpile-only app/server.ts"
+}
