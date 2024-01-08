@@ -29,3 +29,7 @@ package-lock.json
 yarn.lock
 # MacOS specific files
 .DS_Store
+
+# Builded dependencies #
+app/static/css/output.css
+mygym/docker
