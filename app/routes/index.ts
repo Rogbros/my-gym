@@ -1,9 +1,13 @@
-import express from 'express';
+import { Router, Request, Response } from "express";
 
-const router = express.Router();
+import workouts from "../controllers/workoutController";
 
-router.get('/', (req: express.Request, res: express.Response) => {
+const router = Router();
+
+router.get('/', (req: Request, res: Response) => {
   res.render('pages/dashboard.html', {message: 'Welcome to my life'});
 });
+
+router.use(workouts);
 
 export default router;
