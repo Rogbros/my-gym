@@ -6,7 +6,7 @@ const router = Router();
 router.get("/workouts", async (req: Request, res: Response, next: NextFunction) => {
   try {
     const workouts = await getWorkouts();
-    res.render('partials/workouts.html', { workouts });
+    res.render('pages/workouts.html', { workouts });
     console.log(workouts);
   } catch (err) {
     next(err);

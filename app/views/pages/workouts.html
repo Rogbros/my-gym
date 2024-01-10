@@ -1,0 +1,12 @@
+{% extends '../base.html' %}
+
+{% block content %}
+  <main>
+    <h1>Workouts</h1>
+    <div>
+      {% for workout in workouts %}
+        <div data-id="{{ workout.id }}">{{ workout.name }}</>
+      {% endfor %}
+    </div>
+  </main>
+{% endblock %}
