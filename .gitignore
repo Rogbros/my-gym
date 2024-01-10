@@ -33,3 +33,4 @@ yarn.lock
 # Builded dependencies #
 app/static/css/output.css
 mygym/docker
+docker/data
