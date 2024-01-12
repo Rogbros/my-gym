@@ -3,7 +3,13 @@
 {% block content %}
   <main>
     <h1>Create new workout</h1>
-    <form method="post">
+    <form 
+      id="workouts_form"
+      hx-post="/workouts/new"
+      hx-swap="innerHTML"
+      hx-target="#workouts_form"
+      hx-select="#workouts_form"
+    >
       <div>
         <label for="name">Name</label>
         <input type="text" id="name" name="name" class="text-gray-900">
