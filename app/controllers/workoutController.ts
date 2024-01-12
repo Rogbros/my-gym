@@ -7,7 +7,6 @@ router.get("/workouts", async (req: Request, res: Response, next: NextFunction) 
   try {
     const workouts = await getWorkouts();
     res.render("pages/workouts/index.html", { workouts });
-    console.log(workouts);
   } catch (err) {
     next(err);
   }

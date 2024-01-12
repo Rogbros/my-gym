@@ -1,0 +1,24 @@
+{% extends "../base.html" %}
+
+{% block content %}
+  <header class="px-8 py-6 flex items-center justify-between">
+    <h1 class="text-4xl font-bold">MyGym</h1>
+    <nav>
+      <ul class="flex gap-4">
+        <li>
+          <a href="/">Dashboard</a>
+        </li>
+        <li>
+          <a href="/workouts">Workouts</a>
+        </li>
+        <li>
+          <a href="/history">History</a>
+        </li>
+      </ul>
+    </nav>
+  </header>
+  <div class="container mx-auto py-6">
+    {% block main %}
+    {% endblock %}
+  </div>
+{% endblock %}
