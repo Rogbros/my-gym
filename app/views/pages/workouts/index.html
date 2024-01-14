@@ -1,11 +1,12 @@
-{% extends '../../base.html' %}
+{% extends '../../layouts/authorized_layout.html' %}
 
-{% block content %}
+{% block main %}
   <main>
     <h1>Workouts</h1>
+    <a href="/workouts/new">Add new Workout</a>
     <div>
       {% for workout in workouts %}
-        <div data-id="{{ workout.id }}">{{ workout.name }}</>
+        <div data-id="{{ workout.id }}">{{ workout.name }}</a>
       {% endfor %}
     </div>
   </main>

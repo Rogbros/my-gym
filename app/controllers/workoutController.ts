@@ -1,5 +1,6 @@
 import { Router, Request, Response, NextFunction } from "express";
-import { getWorkouts } from "../services/workoutService";
+import { getWorkouts, createWorkout } from "../services/workoutService";
+import { getUser } from "../services/userService";
 
 const router = Router();
 
@@ -18,7 +19,19 @@ router.get("/workouts/new", async (req: Request, res: Response, next: NextFuncti
 
 router.post("/workouts/new", async(req: Request, res: Response, next: NextFunction) => {
   console.log(req.body);
-  res.render("pages/workouts/new.html");
+  try {
+    const user = await getUser(1);
+    const body = { ...req.body, userId: user.id };
+    if(body.workoutDate) {
+      body.workoutDate = new Date(body.workoutDate).toISOString();
+    }
+    const workout = await createWorkout(body);
+    console.log(workout);
+    res.render("pages/workouts/new.html");
+  } catch (err) {
+    next(err);
+  }
+  
 })
 
 export default router;

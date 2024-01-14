@@ -5,7 +5,7 @@ export async function getWorkouts() {
   return workouts;  
 }
 
-export async function addWorkout(workout) {
+export async function createWorkout(workout) {
   const newWorkout = await prisma.workout.create({ data: workout })
   return newWorkout;
 }
