@@ -18,20 +18,21 @@ router.get("/workouts/new", async (req: Request, res: Response, next: NextFuncti
   res.render("pages/workouts/new.html");
 });
 
-router.post("/workouts/new", body('name').notEmpty() ,async(req: Request, res: Response, next: NextFunction) => {
+router.post("/workouts/new", body('name').notEmpty(), async(req: Request, res: Response, next: NextFunction) => {
   try {
     const validation = validationResult(req);
-    console.log(validation);
-    if(!validation.isEmpty()) {
-      throw({ message: "Please enter a name for a workout" });
+    console.log(validation.array());
+    if(validation.isEmpty()) {
+      const user = await getUser(1);
+      const body = { ...req.body, userId: user.id };
+      if(body.workoutDate) {
+        body.workoutDate = new Date(body.workoutDate).toISOString();
+      }
+      const workout = await createWorkout(body);
+      res.render("pages/workouts/new.html");
     }
-    const user = await getUser(1);
-    const body = { ...req.body, userId: user.id };
-    if(body.workoutDate) {
-      body.workoutDate = new Date(body.workoutDate).toISOString();
-    }
-    const workout = await createWorkout(body);
-    res.render("pages/workouts/new.html");
+    // TODO: Throw error for first error from validation object
+    throw new Error("Please enter a name for a workout");
   } catch (err) {
     next(err);
   }
