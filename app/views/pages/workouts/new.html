@@ -3,26 +3,6 @@
 {% block main %}
   <main>
     <h1>Create new workout</h1>
-    <form 
-      id="workouts_form"
-      hx-post="/workouts/new"
-      hx-swap="innerHTML"
-      hx-target="#workouts_form"
-      hx-select="#workouts_form"
-    >
-      <div>
-        <label for="name">Name</label>
-        <input type="text" id="name" name="name" class="text-gray-900">
-      </div>
-      <div>
-        <label for="workoutDate">Date</label>
-        <input type="date" id="workoutDate" name="workoutDate" class="text-gray-900">
-      </div>
-      <div>
-        <label for="isDone">Done</label>
-        <input type="checkbox" id="isDone" name="isDone">
-      </div>
-      <button type="submit">Create</button>
-    </form>
+    {% include "../../forms/workout_form.html" %}
   </main>
 {% endblock %}

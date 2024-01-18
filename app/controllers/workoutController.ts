@@ -21,7 +21,7 @@ router.get("/workouts/new", async (req: Request, res: Response, next: NextFuncti
 router.post("/workouts/new", body('name').notEmpty(), async(req: Request, res: Response, next: NextFunction) => {
   try {
     const validation = validationResult(req);
-    console.log(validation.array());
+    console.log(validation);
     if(validation.isEmpty()) {
       const user = await getUser(1);
       const body = { ...req.body, userId: user.id };
@@ -31,8 +31,8 @@ router.post("/workouts/new", body('name').notEmpty(), async(req: Request, res: R
       const workout = await createWorkout(body);
       res.render("pages/workouts/new.html");
     }
-    // TODO: Throw error for first error from validation object
-    throw new Error("Please enter a name for a workout");
+//  TODO: change validation object to have a name as a main key to search for in template
+    res.render("forms/workout_form.html", { validation })
   } catch (err) {
     next(err);
   }
