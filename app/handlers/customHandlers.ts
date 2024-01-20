@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 
-function customResponseActions(req: Request, res: Response, next: NextFunction) {
+function customResponseHandlers(req: Request, res: Response, next: NextFunction) {
 
   res.htmxRedirect = function(redirectPath) {
     if(req.get("hx-request")) {
@@ -14,5 +14,5 @@ function customResponseActions(req: Request, res: Response, next: NextFunction) 
 }
 
 export {
-  customResponseActions,
+  customResponseHandlers,
 }

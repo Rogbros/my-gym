@@ -6,7 +6,7 @@ import twig from 'twig';
 import path from 'path';
 import bodyParser from 'body-parser';
 
-import { customResponseActions } from './actions/customActions';
+import { customResponseHandlers } from './handlers/customHandlers';
 import router from './routes'; 
 
 dotenv.config();
@@ -22,7 +22,7 @@ app.use(helmet({ contentSecurityPolicy: false }));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(express.static(__dirname + '/static'));
-app.use(customResponseActions);
+app.use(customResponseHandlers);
 
 app.use('/', router)
 
