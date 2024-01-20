@@ -2,6 +2,7 @@ import { Router, Request, Response, NextFunction } from "express";
 import { getWorkouts, createWorkout } from "../services/workoutService";
 import { getUser } from "../services/userService";
 import { body, validationResult, matchedData } from "express-validator";
+import type { newWorkoutData } from "types";
 
 const router = Router();
 
@@ -18,24 +19,24 @@ router.get("/workouts/new", async (req: Request, res: Response, next: NextFuncti
   res.render("pages/workouts/new.html");
 });
 
-const nameValidator = () => body('name').notEmpty().escape();
+const newWorkoutValidator = [
+  body('name').notEmpty().trim().escape(),
+  body('workoutDate').notEmpty().isISO8601().toDate(),
+]
 
-router.post("/workouts/new", nameValidator(), async(req: Request, res: Response, next: NextFunction) => {
+router.post("/workouts/new", newWorkoutValidator, async(req: Request, res: Response, next: NextFunction) => {
   try {
-    const validation = validationResult(req);
-    if(validation.isEmpty()) {
-      const data = matchedData(req);
-      console.log(data);
+    const errors = validationResult(req);
+    const displayErrors = errors.mapped();
+    if(errors.isEmpty()) {
+      const data = matchedData(req) as newWorkoutData;
       const user = await getUser(1);
-      const body = { ...req.body, userId: user.id };
-      if(body.workoutDate) {
-        body.workoutDate = new Date(body.workoutDate).toISOString();
-      }
-      const workout = await createWorkout(body);
-      res.render("pages/workouts/new.html");
+      const body = { ...data, userId: user.id };
+      await createWorkout(body);
+      res.htmxRedirect("/workouts");
+      return;
     }
-//  TODO: change validation object to have a name as a main key to search for in template
-    res.render("forms/workout_form.html", { validation })
+    res.render("forms/workout_form.html", { errors: displayErrors })
   } catch (err) {
     next(err);
   }

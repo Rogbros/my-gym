@@ -2,18 +2,18 @@
 <form 
   id="workouts_form"
   hx-post="/workouts/new"
-  hx-swap="innerHTML"
+  hx-swap="outerHTML"
   hx-target="#workouts_form"
-  hx-select="#workouts_form"
-  >
-{{ validation }}
+>
   <div>
     <label for="name">Name</label>
     <input type="text" id="name" name="name" class="text-gray-900">
+    <p>{{ errors.name.msg }}</p>
   </div>
   <div>
     <label for="workoutDate">Date</label>
     <input type="date" id="workoutDate" name="workoutDate" class="text-gray-900">
+    <p>{{ errors.workoutDate.msg }}</p>
   </div>
   <div>
     <label for="isDone">Done</label>
