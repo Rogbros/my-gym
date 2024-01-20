@@ -1,7 +1,7 @@
 import { Router, Request, Response, NextFunction } from "express";
 import { getWorkouts, createWorkout } from "../services/workoutService";
 import { getUser } from "../services/userService";
-import { body, validationResult } from "express-validator";
+import { body, validationResult, matchedData } from "express-validator";
 
 const router = Router();
 
@@ -18,11 +18,14 @@ router.get("/workouts/new", async (req: Request, res: Response, next: NextFuncti
   res.render("pages/workouts/new.html");
 });
 
-router.post("/workouts/new", body('name').notEmpty(), async(req: Request, res: Response, next: NextFunction) => {
+const nameValidator = () => body('name').notEmpty().escape();
+
+router.post("/workouts/new", nameValidator(), async(req: Request, res: Response, next: NextFunction) => {
   try {
     const validation = validationResult(req);
-    console.log(validation);
     if(validation.isEmpty()) {
+      const data = matchedData(req);
+      console.log(data);
       const user = await getUser(1);
       const body = { ...req.body, userId: user.id };
       if(body.workoutDate) {
